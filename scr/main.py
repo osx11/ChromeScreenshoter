@@ -25,7 +25,12 @@ welcome = '''
 '''
 
 
+def alert(msg):
+    notification.notify(title='ChromeScreenshoter', message=msg, app_name='ChromeScreenshoter')
+
+
 def chrome_init():
+    alert('Ожидание соединения с Chrome')
     global w_handle
     w_handle = None
     while not w_handle:
@@ -33,6 +38,7 @@ def chrome_init():
         find = pywinauto.findwindows.find_windows(title_re=u'Новая вкладка')
         w_handle = find[0] if find.__len__() == 1 else None
     print(welcome)
+    alert('Программа готова к использованию')
 
 
 def first_startup():
@@ -56,12 +62,7 @@ def screenshot():
     img = ImageGrab.grab((coordinates['left'] + 10, coordinates['top'], coordinates['right'] - 10, coordinates['bottom'] - 10))
     img.save(date_path + '/%d.png' % filename, 'PNG')
     print('Скриншот сохранен как %s' % date_path + '/%d.png' % filename)
-
-    notification.notify(
-        title='Снимок сохранен',
-        message='Скриншот сохранен как %s' % date_path + '/%d.png' % filename,
-        app_name='ChromeScreenshoter',
-    )
+    alert('Скриншот сохранен как %s' % date_path + '/%d.png' % filename)
 
 
 def coords(handle):
@@ -72,6 +73,7 @@ def coords(handle):
         rect = window.rectangle()
         return {'left': rect.left, 'right': rect.right, 'top': rect.top, 'bottom': rect.bottom, 'width': rect.width(), 'height': rect.height()}
     except RuntimeError:
+        alert('Потеряна связь с Chrome')
         chrome_init()
         return
 

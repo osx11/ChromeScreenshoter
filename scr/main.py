@@ -11,6 +11,9 @@ date_path = root_path + '/' + str(date)
 chrome = pywinauto.Application(backend='uia')
 w_handle = None
 
+screen_width = 3840
+screen_height = 2160
+
 welcome = '''
 Программа готова к использованию.
 Управление:
@@ -42,7 +45,7 @@ def screenshot():
     if not coordinates:
         return
 
-    if coordinates['left'] < 0 or coordinates['right'] > 3840 or coordinates['top'] < 0 or coordinates['bottom'] > 2160:
+    if coordinates['left'] < 0 or coordinates['right'] > screen_width or coordinates['top'] < 0 or coordinates['bottom'] > screen_height:
         print('Ошибка: поместите Chrome в пределы экрана.')
         return
 

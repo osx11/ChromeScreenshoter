@@ -1,6 +1,7 @@
 import keyboard
 import os
 from datetime import datetime
+from time import sleep
 
 from PIL import ImageGrab
 import pywinauto
@@ -66,7 +67,8 @@ def screenshot():
 def coords(handle):
     try:
         window = pywinauto.Application().connect(handle=handle).top_window()
-        window.SetFocus()
+        window.set_focus()
+        sleep(0.5)
         rect = window.rectangle()
         return {'left': rect.left, 'right': rect.right, 'top': rect.top, 'bottom': rect.bottom, 'width': rect.width(), 'height': rect.height()}
     except RuntimeError:

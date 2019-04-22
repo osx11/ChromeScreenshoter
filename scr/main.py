@@ -37,6 +37,7 @@ def chrome_init():
         print('Ожидание Chrome. Откройте ОДНУ пустую вкладку.')
         find = pywinauto.findwindows.find_windows(title_re=u'Новая вкладка')
         w_handle = find[0] if find.__len__() == 1 else None
+        sleep(0.1)
     print(welcome)
     alert('Программа готова к использованию')
 

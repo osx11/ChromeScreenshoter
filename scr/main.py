@@ -10,7 +10,6 @@ from plyer import notification
 date = datetime.now().strftime('%d.%m.%Y')
 root_path = os.path.expanduser('~/Documents/ChromeScreenshoter')
 date_path = root_path + '/' + str(date)
-chrome = pywinauto.Application(backend='uia')
 w_handle = None
 
 screen_width = 3840

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from PIL import ImageGrab
 import pywinauto
+from plyer import notification
 
 date = datetime.now().strftime('%d.%m.%Y')
 root_path = os.path.expanduser('~/Documents/ChromeScreenshoter')
@@ -55,10 +56,17 @@ def screenshot():
     img.save(date_path + '/%d.png' % filename, 'PNG')
     print('Скриншот сохранен как %s' % date_path + '/%d.png' % filename)
 
+    notification.notify(
+        title='Снимок сохранен',
+        message='Скриншот сохранен как %s' % date_path + '/%d.png' % filename,
+        app_name='ChromeScreenshoter',
+    )
+
 
 def coords(handle):
     try:
-        window = pywinauto.Application().connect(handle=handle).window(handle=handle)
+        window = pywinauto.Application().connect(handle=handle).top_window()
+        window.SetFocus()
         rect = window.rectangle()
         return {'left': rect.left, 'right': rect.right, 'top': rect.top, 'bottom': rect.bottom, 'width': rect.width(), 'height': rect.height()}
     except RuntimeError:
